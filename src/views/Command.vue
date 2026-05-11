@@ -25,13 +25,18 @@ const nav = computed(() => {
 })
 
 function goBack() {
-  router.push('/')
+  // 返回上一页（通常是调用 :cmd[] 的文章）
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/commands')
+  }
 }
 </script>
 
 <template>
   <div v-if="command" class="cmd-page">
-    <button class="back-link" @click="goBack">&larr; 返回首页</button>
+    <button class="back-link" @click="goBack">&larr; 返回上一页</button>
 
     <header class="cmd-header">
       <h1 class="cmd-title">{{ command.title }}</h1>
@@ -60,7 +65,7 @@ function goBack() {
 
   <div v-else class="not-found">
     <p>指令未找到</p>
-    <button class="back-link" @click="goBack">&larr; 返回首页</button>
+    <button class="back-link" @click="goBack">&larr; 返回上一页</button>
   </div>
 </template>
 

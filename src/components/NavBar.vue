@@ -4,6 +4,7 @@ import { ref } from 'vue'
 
 const navLinks = [
   { name: '首页', path: '/' },
+  { name: '指令速查', path: '/commands' },
   { name: '关于', path: '/about' },
 ]
 </script>
