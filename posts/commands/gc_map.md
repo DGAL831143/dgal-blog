@@ -1,7 +1,7 @@
 ---
 title: gc_map
 category: 地理编码
-summary: Calculate terrain-geocoding lookup table and DEM derived data products.
+summary: 计算地形地理编码查找表及 DEM 衍生数据产品（模拟 SAR 强度图、入射角、叠掩阴影图等）。
 ---
 
 **gc_map**

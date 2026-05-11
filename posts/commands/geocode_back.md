@@ -1,7 +1,7 @@
 ---
 title: geocode_back
 category: 地理编码
-summary: Geocoding of image data using a geocoding lookup table (backward).
+summary: 向后地理编码，使用查找表将雷达坐标系影像转换到地理坐标系。
 ---
 
 **geocode_back**

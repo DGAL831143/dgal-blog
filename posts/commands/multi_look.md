@@ -1,7 +1,7 @@
 ---
 title: multi_look
 category: 预处理
-summary: Multi-looking of complex data (SLC) and generation of multi-look intensity (MLI).
+summary: 对 SLC 复数影像进行多视处理，生成多视强度图（MLI），提高信噪比并使像素间距接近一致。
 ---
 
 **multi_look**

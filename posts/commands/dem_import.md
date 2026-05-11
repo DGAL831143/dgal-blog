@@ -1,7 +1,7 @@
 ---
 title: dem_import
 category: DEM 导入
-summary: Convert original DEM file format into Gamma format, transform geoid heights into ellipsoid heights.
+summary: 将原始 DEM 文件转换为 GAMMA 二进制格式，支持大地水准面高到椭球高的转换。
 ---
 
 **dem_import**

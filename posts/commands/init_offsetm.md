@@ -1,7 +1,7 @@
 ---
 title: init_offsetm
 category: 精配准
-summary: Initial offset estimation for multi-look intensity images.
+summary: 多视强度图初始偏移量估计，通过互相关确定参考影像与待配准影像之间的大致偏移。
 ---
 
 **init_offsetm**

@@ -1,7 +1,7 @@
 ---
 title: gc_map_fine
 category: 地理编码
-summary: Geocoding lookup table refinement using DIFF_par offset polynomials.
+summary: 利用 DIFF_par 偏移多项式精化粗查找表，生成用于精确地理编码的精细查找表。
 ---
 
 **gc_map_fine**

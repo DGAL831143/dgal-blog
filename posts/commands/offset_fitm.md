@@ -1,7 +1,7 @@
 ---
 title: offset_fitm
 category: 精配准
-summary: Range and azimuth offset polynomial estimation using SVD.
+summary: 使用 SVD 方法拟合距离向和方位向偏移多项式，剔除误差点后建立精配准映射关系。
 ---
 
 **offset_fitm**

@@ -1,7 +1,7 @@
 ---
 title: create_diff_par
 category: 精配准
-summary: Create DIFF/GEO parameter file for geocoding and differential interferometry.
+summary: 创建 DIFF/GEO 参数文件，用于地理编码和差分干涉测量。
 ---
 
 **create_diff_par**

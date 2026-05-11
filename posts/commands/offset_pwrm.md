@@ -1,7 +1,7 @@
 ---
 title: offset_pwrm
 category: 精配准
-summary: Offset estimation between MLI images using intensity cross-correlation.
+summary: 基于强度互相关的多视影像偏移量精估计，计算距离向和方位向的亚像元级偏移。
 ---
 
 **offset_pwrm**

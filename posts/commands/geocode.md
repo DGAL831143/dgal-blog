@@ -1,7 +1,7 @@
 ---
 title: geocode
 category: 地理编码
-summary: Forward geocoding transformation using a lookup table.
+summary: 前向地理编码，使用查找表将雷达坐标系数据重采样到地理坐标系。
 ---
 
 **geocode**
