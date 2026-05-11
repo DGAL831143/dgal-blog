@@ -93,6 +93,23 @@ md.renderer.rules.heading_open = function (tokens, idx, options, env, self) {
   return defaultHeadingOpen(tokens, idx, options, env, self)
 }
 
+// ---- :cmd[xxx] 语法：渲染为指令链接 ----
+md.use((md) => {
+  md.inline.ruler.push('cmd_link', (state, silent) => {
+    const match = state.src.slice(state.pos).match(/^:cmd\[([^\]]+)\]/)
+    if (!match) return false
+    if (silent) return true
+    const token = state.push('cmd_link', '', 0)
+    token.content = match[1]
+    state.pos += match[0].length
+    return true
+  })
+  md.renderer.rules.cmd_link = (tokens, idx) => {
+    const slug = tokens[idx].content
+    return `<a href="/command/${slug}" data-cmd="${slug}" class="cmd-link">${slug}</a>`
+  }
+})
+
 // ---- 从原始 markdown 提取标题列表 ----
 function extractHeadings(rawBody) {
   const headings = []
@@ -111,7 +128,17 @@ function extractHeadings(rawBody) {
 }
 
 // ---- 自动扫描所有 .md 文件 ----
-const modules = import.meta.glob('/posts/*.md', { as: 'raw', eager: true })
+const modules = import.meta.glob('/posts/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+})
+
+const cmdModules = import.meta.glob('/posts/commands/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+})
 
 // ---- 导出 API ----
 
@@ -163,4 +190,40 @@ export function getCategories() {
 /** 按分类筛选文章 */
 export function getPostsByCategory(category) {
   return loadPosts().filter((p) => p.category === category)
+}
+
+// ---- 指令文档 API ----
+
+/** 获取全部指令列表 */
+export function loadCommands() {
+  return Object.entries(cmdModules)
+    .map(([path, raw]) => {
+      const { meta, body } = parseFrontmatter(raw)
+      const slug = path.replace('/posts/commands/', '').replace('.md', '')
+      return {
+        slug,
+        title: meta.title || '',
+        category: meta.category || '未分类',
+        summary: meta.summary || '',
+        _rawBody: body,
+      }
+    })
+    .sort((a, b) => a.title.localeCompare(b.title))
+}
+
+/** 根据 slug 获取单条指令（含渲染后的 HTML） */
+export function getCommandBySlug(slug) {
+  const path = `/posts/commands/${slug}.md`
+  const raw = cmdModules[path]
+  if (!raw) return null
+
+  const { meta, body } = parseFrontmatter(raw)
+  return {
+    slug,
+    title: meta.title || '',
+    category: meta.category || '未分类',
+    summary: meta.summary || '',
+    contentHTML: md.render(renderMath(body)),
+    headings: extractHeadings(body),
+  }
 }

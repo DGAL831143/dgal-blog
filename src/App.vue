@@ -1,7 +1,22 @@
 <script setup>
-// 根组件：提供通用布局骨架
+// 根组件：提供通用布局骨架 + 全局指令链接点击拦截
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import FooterBar from './components/FooterBar.vue'
+
+const router = useRouter()
+
+// 拦截 .cmd-link 点击：使用 Vue Router 导航，确保 base path 正确
+onMounted(() => {
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.cmd-link')
+    if (!link) return
+    e.preventDefault()
+    const href = link.getAttribute('href')
+    if (href) router.push(href)
+  })
+})
 </script>
 
 <template>

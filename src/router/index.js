@@ -11,6 +11,11 @@ const routes = [
     name: 'Article',
     component: () => import('../views/Article.vue'),
   },
+  {
+    path: '/command/:slug',
+    name: 'Command',
+    component: () => import('../views/Command.vue'),
+  },
 ]
 
 const router = createRouter({
