@@ -28,6 +28,10 @@ function parseFrontmatter(raw) {
     if (val.startsWith('[') && val.endsWith(']')) {
       val = val.slice(1, -1).split(',').map((s) => s.trim())
     }
+    // 纯整数字符串转为 number（用于 order 等字段）
+    if (typeof val === 'string' && /^-?\d+$/.test(val)) {
+      val = Number(val)
+    }
     meta[key] = val
   })
   return { meta, body: match[2] }
@@ -155,6 +159,9 @@ export function loadPosts() {
         tags: Array.isArray(meta.tags) ? meta.tags : [],
         category: meta.category || '未分类',
         summary: meta.summary || '',
+        series: meta.series || '',
+        seriesSlug: meta.series ? slugify(meta.series) : '',
+        order: meta.order || 0,
         // 延迟渲染：只在访问详情页时才渲染全文 HTML
         _rawBody: body,
       }
@@ -176,6 +183,9 @@ export function getPostBySlug(slug) {
     tags: Array.isArray(meta.tags) ? meta.tags : [],
     category: meta.category || '未分类',
     summary: meta.summary || '',
+    series: meta.series || '',
+    seriesSlug: meta.series ? slugify(meta.series) : '',
+    order: meta.order || 0,
     contentHTML: md.render(renderMath(body)),
     headings: extractHeadings(body),
   }
@@ -190,6 +200,28 @@ export function getCategories() {
 /** 按分类筛选文章 */
 export function getPostsByCategory(category) {
   return loadPosts().filter((p) => p.category === category)
+}
+
+/** 获取所有系列列表（按系列名排序） */
+export function getSeries() {
+  const map = {}
+  for (const p of loadPosts()) {
+    if (!p.series) continue
+    if (!map[p.seriesSlug]) {
+      map[p.seriesSlug] = { slug: p.seriesSlug, name: p.series, count: 0, articles: [] }
+    }
+    map[p.seriesSlug].articles.push(p)
+    map[p.seriesSlug].count++
+  }
+  for (const s of Object.values(map)) {
+    s.articles.sort((a, b) => a.order - b.order || new Date(a.date) - new Date(b.date))
+  }
+  return Object.values(map).sort((a, b) => a.name.localeCompare(b.name))
+}
+
+/** 根据 slug 获取单个系列 */
+export function getSeriesBySlug(slug) {
+  return getSeries().find((s) => s.slug === slug) || null
 }
 
 // ---- 指令文档 API ----

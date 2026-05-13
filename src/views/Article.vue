@@ -17,7 +17,13 @@ const article = computed(() => {
 })
 
 function goBack() {
-  router.push('/')
+  if (article.value && article.value.series) {
+    router.push(`/series/${article.value.seriesSlug}`)
+  } else if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/')
+  }
 }
 
 // ---- 浮动翻译窗（绑定 details 展开/折叠） ----
@@ -111,7 +117,7 @@ function closePanel(id) {
       </details>
 
       <button class="back-link" @click="goBack">
-        &larr; 返回首页
+        &larr; {{ article.series ? `返回${article.series}` : '返回' }}
       </button>
 
       <header class="article-header">
@@ -120,6 +126,11 @@ function closePanel(id) {
           <time>{{ article.date }}</time>
           <span class="meta-sep">&middot;</span>
           <span class="article-category">{{ article.category }}</span>
+          <router-link
+            v-if="article.series"
+            :to="`/series/${article.seriesSlug}`"
+            class="article-series"
+          >{{ article.series }}</router-link>
           <span
             v-for="tag in article.tags"
             :key="tag"
@@ -301,6 +312,15 @@ function closePanel(id) {
 
 .meta-sep { color: var(--color-border); }
 .article-category { color: var(--color-accent); font-weight: 500; }
+.article-series {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  background: rgba(37, 99, 235, 0.08);
+  border-radius: 4px;
+}
 .article-tag { color: var(--color-accent); font-weight: 500; }
 .article-tag::before { content: '#'; opacity: 0.5; }
 

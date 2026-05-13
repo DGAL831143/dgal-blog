@@ -21,6 +21,16 @@ const routes = [
     name: 'Command',
     component: () => import('../views/Command.vue'),
   },
+  {
+    path: '/series',
+    name: 'Series',
+    component: () => import('../views/Series.vue'),
+  },
+  {
+    path: '/series/:slug',
+    name: 'SeriesDetail',
+    component: () => import('../views/SeriesDetail.vue'),
+  },
 ]
 
 const router = createRouter({

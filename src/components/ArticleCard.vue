@@ -23,6 +23,7 @@ defineProps({
       <p class="card-summary">{{ article.summary }}</p>
 
       <footer class="card-footer">
+        <span v-if="article.series" class="card-series">{{ article.series }}</span>
         <span
           v-for="tag in article.tags"
           :key="tag"
@@ -100,6 +101,16 @@ defineProps({
   font-weight: 500;
   color: var(--color-accent);
   background: rgba(37, 99, 235, 0.08);
+  border-radius: 4px;
+}
+
+.card-series {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: rgba(0, 0, 0, 0.04);
   border-radius: 4px;
 }
 

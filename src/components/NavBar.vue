@@ -4,6 +4,7 @@ import { ref } from 'vue'
 
 const navLinks = [
   { name: '首页', path: '/' },
+  { name: '系列', path: '/series' },
   { name: '指令速查', path: '/commands' },
   { name: '关于', path: '/about' },
 ]
@@ -13,7 +14,7 @@ const navLinks = [
   <header class="navbar">
     <div class="navbar-inner">
       <router-link to="/" class="logo">
-        <span class="logo-icon">B</span>
+        <span class="logo-icon">DGAL</span>
         <span class="logo-text">极简博客</span>
       </router-link>
 
@@ -70,8 +71,8 @@ const navLinks = [
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 45px;
+  height: 45px;
   background: var(--color-primary);
   color: #fff;
   border-radius: 6px;
