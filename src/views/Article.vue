@@ -61,6 +61,26 @@ onMounted(() => {
         floatPanels.value = [...floatPanels.value]
       })
     })
+
+    // 代码块复制按钮
+    body.querySelectorAll('pre').forEach((pre) => {
+      if (pre.querySelector('.copy-btn')) return
+      const wrapper = document.createElement('div')
+      wrapper.className = 'code-block-wrapper'
+      pre.parentNode.insertBefore(wrapper, pre)
+      wrapper.appendChild(pre)
+
+      const btn = document.createElement('button')
+      btn.className = 'copy-btn'
+      btn.textContent = '复制'
+      btn.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.textContent || pre.textContent
+        await navigator.clipboard.writeText(code)
+        btn.textContent = '已复制'
+        setTimeout(() => { btn.textContent = '复制' }, 2000)
+      })
+      wrapper.appendChild(btn)
+    })
   })
 })
 
@@ -360,6 +380,13 @@ function closePanel(id) {
   display: none;
 }
 
+.article-body :deep(.code-block-wrapper) {
+  position: relative; margin: 24px 0;
+}
+.article-body :deep(.code-block-wrapper pre) {
+  margin: 0;
+}
+
 .article-body :deep(pre) {
   background: #1e1e2e; border-radius: var(--radius);
   padding: 20px 24px; overflow-x: auto; margin: 24px 0;
@@ -368,6 +395,23 @@ function closePanel(id) {
 
 .article-body :deep(pre code) {
   color: #cdd6f4; font-family: 'Consolas', 'Monaco', monospace;
+}
+
+.article-body :deep(.copy-btn) {
+  position: absolute; top: 8px; right: 12px;
+  padding: 4px 10px;
+  font-size: 0.78rem; font-family: var(--font-family);
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.article-body :deep(.copy-btn):hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .article-body :deep(code) { font-family: 'Consolas', 'Monaco', monospace; font-size: 0.9em; }

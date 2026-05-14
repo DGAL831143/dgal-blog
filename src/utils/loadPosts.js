@@ -39,6 +39,11 @@ function parseFrontmatter(raw) {
 
 // ---- KaTeX 数学公式预处理 ----
 function renderMath(raw) {
+  // 保护代码块（围栏和缩进）以及行内代码，避免 $ 被 KaTeX 误解析
+  const protected_ = []
+  raw = raw.replace(/```[\s\S]*?```/g, (m) => { protected_.push(m); return `\x00CODE${protected_.length - 1}\x00` })
+  raw = raw.replace(/`[^`\n]+`/g, (m) => { protected_.push(m); return `\x00CODE${protected_.length - 1}\x00` })
+
   // 块级公式 $$...$$
   raw = raw.replace(/\$\$([\s\S]+?)\$\$/g, (_, formula) => {
     try {
@@ -61,6 +66,9 @@ function renderMath(raw) {
       return formula
     }
   })
+
+  // 还原被保护的代码
+  raw = raw.replace(/\x00CODE(\d+)\x00/g, (_, i) => protected_[i])
   return raw
 }
 
