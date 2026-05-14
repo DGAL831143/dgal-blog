@@ -35,9 +35,9 @@ intermediate and output filenames are generated based on the zip file names.
 
 ## 参数翻译
 
-| 参数                     | 说明                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------ | --- |
-| `zipfile_list`           | 输入：影像参数文件 1                                                                       |
-| `zipfile_ref`            | 输入：作为参考的 Sentinel-1 TOPS SLC zip 文件名 -则仅生成参考 TOPS SLC 的 burst 编号表     |
-| `burst_number_table_ref` | 输入：包含选定 burst 起止编号的 ASCII 文件 -则使用参考 TOPS SLC zip 文件中包含的所有 burst |
-| `cleaning`               | 中间文件删除标志：1 = 删除（默认），0 = 不删除                                             |     |
+| 参数 | 说明 |
+| ---- | ---- |
+| `zipfile_list` | 输入：ASCII 文本文件，包含单次数据获取的 S1 zip 文件名，输入 `-` 则仅生成参考 TOPS SLC 的 burst 编号表 |
+| `zipfile_ref` | 输入：作为参考的 Sentinel-1 TOPS SLC zip 文件名 |
+| `burst_number_table_ref` | 输入：包含选定 burst 起止编号的 ASCII 文件，输入 `-` 则使用参考 TOPS SLC zip 中的所有 burst |
+| `cleaning` | 中间文件删除标志：`1` = 删除（默认），`0` = 不删除 |
